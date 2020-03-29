@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import './config/env';
 
 import express, { Application } from 'express';
 import { createConnection } from 'typeorm';
@@ -9,16 +10,16 @@ class App {
 
   constructor() {
     this.express = express();
-
-    this.boot();
   }
 
   async boot() {
     await createConnection();
 
     this.beforeMiddlewares();
-    this.routes();
+    await this.routes();
     this.afterMiddlewares();
+
+    return this.express;
   }
 
   beforeMiddlewares() {
@@ -36,4 +37,4 @@ class App {
   }
 }
 
-export default new App().express;
+export default new App().boot();

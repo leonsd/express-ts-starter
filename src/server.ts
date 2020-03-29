@@ -1,8 +1,10 @@
-import app from './app';
+import App from './app';
 
 const PORT = process.env.PORT || 3333;
 
-app.listen(PORT, () => {
-  const { log } = console;
-  log('App started in PORT ', PORT);
+App.then((app) => {
+  app.listen(PORT, () => {
+    const { log } = console;
+    log('App started in PORT ', PORT);
+  });
 });
