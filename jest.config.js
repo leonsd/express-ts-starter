@@ -109,7 +109,7 @@ module.exports = {
 
   // A list of paths to directories that Jest should use to search for files in
   roots: [
-    "<rootDir>/src"
+    "<rootDir>/tests"
   ],
 
   // Allows you to use a custom runner instead of Jest's default test runner
@@ -134,10 +134,9 @@ module.exports = {
   // testLocationInResults: false,
 
   // The glob patterns Jest uses to detect test files
-  // testMatch: [
-  //   "**/__tests__/**/*.[jt]s?(x)",
-  //   "**/?(*.)+(spec|test).[tj]s?(x)"
-  // ],
+  testMatch: [
+    "**/tests/**/*.(spec|test).ts?(x)"
+  ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
   // testPathIgnorePatterns: [
@@ -145,7 +144,7 @@ module.exports = {
   // ],
 
   // The regexp pattern or array of patterns that Jest uses to detect test files
-  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
+  // testRegex: '(/tests/.*|(\\.|/)(test))\\.tsx?$',
 
   // This option allows the use of a custom results processor
   // testResultsProcessor: undefined,

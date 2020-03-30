@@ -1,15 +1,50 @@
-import { MigrationInterface, QueryRunner } from 'typeorm';
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class User1585423053754 implements MigrationInterface {
-  name = 'User1585423053754';
+  private table = new Table({
+    name: 'users',
+    columns: [
+      {
+        name: 'id',
+        type: 'integer',
+        isPrimary: true,
+        isGenerated: true,
+        generationStrategy: 'increment',
+        isNullable: false
+      },
+      {
+        name: 'email',
+        type: 'varchar',
+        length: '100',
+        isNullable: false,
+        isUnique: true
+      },
+      {
+        name: 'password',
+        type: 'varchar',
+        length: '100',
+        isNullable: false,
+      },
+      {
+        name: 'created_at',
+        type: 'datetime',
+        isNullable: false,
+        default: 'now()',
+      },
+      {
+        name: 'updated_at',
+        type: 'datetime',
+        isNullable: false,
+        default: 'now()',
+      },
+    ]
+  });
 
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query('CREATE TABLE `users` (`id` int NOT NULL AUTO_INCREMENT, `email` varchar(100) NOT NULL, `password` varchar(100) NOT NULL, `created_at` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), `updated_at` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), UNIQUE INDEX `IDX_97672ac88f789774dd47f7c8be` (`email`), PRIMARY KEY (`id`)) ENGINE=InnoDB', undefined);
+    await queryRunner.createTable(this.table);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query('DROP INDEX `IDX_97672ac88f789774dd47f7c8be` ON `users`', undefined);
-    await queryRunner.query('DROP TABLE `users`', undefined);
+    await queryRunner.dropTable(this.table.name);
   }
-
 }

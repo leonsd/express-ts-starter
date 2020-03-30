@@ -1,45 +1,39 @@
-import path from 'path';
+const path = require('path');
 
 const databases = {
   development: {
-    type: process.env.TYPEORM_CONNECTION,
-    host: process.env.TYPEORM_HOST,
-    port: process.env.TYPEORM_PORT,
-    username: process.env.TYPEORM_USERNAME,
-    password: process.env.TYPEORM_PASSWORD,
-    database: process.env.TYPEORM_DATABASE,
-    synchronize: process.env.TYPEORM_SYNCHRONIZE,
-    logging: process.env.TYPEORM_LOGGING,
+    type: 'mysql',
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
+    synchronize: false,
+    logging: false,
   },
   test: {
     type: 'sqlite',
-    database: `${path.resolve(__dirname, 'src/database/test.sqlite')}`,
+    database: `${path.resolve(__dirname, 'tests/database.sqlite')}`,
     logging: false,
   }
 };
 
+const database = databases[process.env.NODE_ENV];
+
 module.exports = {
-  // type: process.env.TYPEORM_CONNECTION,
-  // host: process.env.TYPEORM_HOST,
-  // port: process.env.TYPEORM_PORT,
-  // username: process.env.TYPEORM_USERNAME,
-  // password: process.env.TYPEORM_PASSWORD,
-  // database: process.env.TYPEORM_DATABASE,
-  // synchronize: process.env.TYPEORM_SYNCHRONIZE,
-  // logging: process.env.TYPEORM_LOGGING,
-  ...(databases[process.env.NODE_ENV]),
+  ...database,
   entities: [
-    "src/entity/**/*.ts"
+    "src/entities/**/*.ts"
   ],
   migrations: [
-    "src/database/migration/**/*.ts"
+    "src/database/migrations/**/*.ts"
   ],
   subscribers: [
-    "src/subscriber/**/*.ts"
+    "src/subscribers/**/*.ts"
   ],
   cli: {
-    entitiesDir: "src/entity",
-    migrationsDir: "src/migration",
-    subscribersDir: "src/subscriber"
+    entitiesDir: "src/entities",
+    migrationsDir: "src/database/migrations",
+    subscribersDir: "src/subscribers"
   }
 }

@@ -1,8 +1,6 @@
 import 'reflect-metadata';
-import './config/env';
 
 import express, { Application } from 'express';
-import { createConnection } from 'typeorm';
 import cors from 'cors';
 
 class App {
@@ -10,11 +8,11 @@ class App {
 
   constructor() {
     this.express = express();
+
+    this.boot = this.boot.bind(this);
   }
 
   async boot() {
-    await createConnection();
-
     this.beforeMiddlewares();
     await this.routes();
     this.afterMiddlewares();
@@ -37,4 +35,7 @@ class App {
   }
 }
 
-export default new App().boot();
+const app = new App();
+const { boot } = app;
+
+export { boot };
