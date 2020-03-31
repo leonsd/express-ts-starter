@@ -2,7 +2,8 @@
   "name": "express-ts",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.ts",
+  "license": "MIT",
   "scripts": {
     "compile": "tsc",
     "configure": "cp .env.example .env",
@@ -18,17 +19,26 @@
     "migration:rollback": "yarn typeorm migration:revert",
     "entity:create": "yarn typeorm migration:create"
   },
-  "author": "",
-  "license": "ISC",
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
+    }
+  },
   "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
     "@types/bcrypt": "^3.0.0",
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.3",
     "@types/jest": "^25.1.4",
     "@types/node": "^13.9.5",
     "@types/supertest": "^2.0.8",
+    "commitizen": "^4.0.3",
     "cross-env": "^7.0.2",
-    "jest": "^25.2.3",
+    "cz-conventional-changelog": "3.1.0",
+    "husky": "^4.2.3",
+    "jest": "^25.2.4",
     "nodemon": "^2.0.2",
     "sqlite": "^3.0.6",
     "supertest": "^4.0.2",
@@ -46,5 +56,10 @@
     "mysql": "^2.18.1",
     "reflect-metadata": "^0.1.13",
     "typeorm": "0.2.24"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
